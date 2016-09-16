@@ -1,0 +1,157 @@
+$green: #7cb342
+
+main
+	padding: 10px
+
+p.price
+	color: $green
+	font-weight: bold
+
+ons-list
+
+	a
+		text-decoration: none
+
+	ons-list-item
+		.text-input--material
+			border-bottom: 0
+		
+		input[type=text], input[type=number], input[type=email]
+			font-size: 15px
+			border: 0
+
+	ons-list-item.product
+		border-radius: 5px
+		margin-bottom: 20px
+		
+		.image
+			width: 60%
+			margin-bottom: 30px
+			text-align: center
+			margin: 10px 20%
+
+			img
+				max-width: 100%
+				height: auto
+
+		.data
+			width: 100%
+
+			.name
+				width: 65%
+				display: inline-block
+
+			.price
+				width: 35%
+				display: inline-block
+				color: $green
+				font-weight: bold
+				text-align: right
+
+		.details
+			width: 100%
+			border-top: 1px solid #eee
+			margin-top: 40px
+			padding-top: 10px
+			
+			ons-button
+				width: 100%
+				text-align: center
+
+ons-list.product-list
+	border: 0
+
+form
+	ons-input
+		width: 100%
+		margin-bottom: 10px
+
+	select
+		width: 100%
+		height: 31px
+		-webkit-appearance: menulist-button
+		font-size: 15px
+		margin-bottom: 10px
+
+	textarea
+		width: 98.5%
+		border: 1px solid #ccc
+		background: transparent
+		height: 100px
+		border-radius: 5px
+		font-size: 15px
+		padding-left: 5px
+
+	.list
+		margin-bottom: 30px
+
+		ons-list-header
+			padding: 10px 0 10px 15px
+
+		ons-input
+			margin-bottom: 0
+
+		select
+			border: 0
+			background: #fff
+			margin-bottom: 0
+
+		textarea
+			border: 0
+			background: #fff
+		
+
+div.product
+	.product-carousel
+		background: #fff
+
+.framed-input
+	border: 1px solid #ccc !important
+	border-radius: 5px !important
+	padding-left: 5px !important
+
+#login-buttons
+	margin: 30px 0
+	width: 100%
+	font-family: arial
+
+	.login-close-text
+		display: none
+
+	.login-link-and-dropdown-list.login-form-sign-in, .login-link-and-dropdown-list.login-form-create-account, .login-link-and-dropdown-list.login-form-forgot-password
+		text-align: center
+
+		.login-link-text
+			text-decoration: none
+			background: #1e88e5
+			padding: 14px 29px
+			border-radius: 3px
+			color: #fff
+
+		#login-dropdown-list
+			box-shadow: none
+			border: none
+			border-radius: 0
+			top: -30px
+			left: 0
+			width: 85%
+			padding: 0 10%
+
+div.login
+	text-align: center
+
+	p
+		text-align: center
+		font-family: arial
+		font-size: 30px
+		color: #ef6c00
+		margin-top: 10px
+	
+	img
+		text-align: center
+		width: 120px
+		margin-top: 85px
+
+.dialog.dialog-container
+	text-align: center
+	padding: 20px 10px 30px 10px

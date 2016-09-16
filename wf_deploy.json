@@ -1,0 +1,9 @@
+{
+	"local_app_name": "zni",
+	"wf_app_name": "zeni_app",
+	"wf_server": "web506.webfaction.com",
+	"wf_username": "bvodola",
+	"mongo_url": "mongodb://bvodola:qZwX1001@ds037252.mlab.com:37252/zeni",
+	"wf_port": "21064",
+	"wf_root_url": "http://zeni.bvodola.webfaction.com"
+}

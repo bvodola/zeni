@@ -1,0 +1,22 @@
+{
+  "name": "zni",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "fibers": "^1.0.13",
+    "meteor-node-stubs": "~0.2.0",
+    "react": "^15.1.0",
+    "react-addons-css-transition-group": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "react-komposer": "^1.11.0",
+    "react-mounter": "^1.2.0"
+  },
+  "devDependencies": {
+    "onsenui": "^2.0.0-rc.14",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "react-onsenui": "^0.5.6"
+  }
+}
