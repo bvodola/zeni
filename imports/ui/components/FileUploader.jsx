@@ -105,7 +105,7 @@ class FileUploader extends Component {
             
             // Sends the data using jQuery.ajax function
             $.ajax({
-                url: 'http://fs.bvodola.webfactional.com/upload/width/400/',
+                url: 'http://fs.bvodola.webfactional.com/upload/height/300/quality/50',
                 data: data,
                 cache: false,
                 contentType: false,

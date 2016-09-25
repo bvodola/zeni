@@ -20,7 +20,7 @@ class AdminSizesList extends Component {
 		};
 
 		Sizes.insert(query);
-		clearFields('#addSizeForm'); // Fix!
+		clearFields('#addSizeForm');
 	}
 
 	handleChangeCategory(event) {

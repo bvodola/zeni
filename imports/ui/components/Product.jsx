@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog, Button } from 'react-onsenui';
+import { Dialog, Button, Carousel, CarouselItem } from 'react-onsenui';
 import { Brands } from '../../api/brands.js';
 
 class Product extends Component {
@@ -43,15 +43,6 @@ class Product extends Component {
 	// componentDidMount
 	// =================
 	componentDidMount() {
-
-		// Item Photos Carousel Setup
-		$(this.refs.carousel).owlCarousel({
-			items: 1,
-			itemsDesktop : false,
-			itemsDesktopSmall : false,
-			itemsTablet: false,
-			itemsMobile : false
-		});
 
 		$('.money-mask').mask("#.##0,00", {reverse: true});
 	}
@@ -111,13 +102,15 @@ class Product extends Component {
 		
 		if(typeof product.images != 'undefined') {
 			return(
-				<div ref="carousel" className="owl-carousel product-carousel">
-				{product.images.map((image) => (
-					<div key={image.split('/').splice(-1)}>
-						<img src={image} alt="" className="" style={{maxWidth: '100%', height: 'auto'}} />
-					</div>
+				<Carousel ref="carousel" swipeable overscrollable style={{'height': '300px'}}>
+				{product.images.map((image, i) => (
+					<CarouselItem key={i} style={{'position': 'absolute'}}>
+						<div key={image.split('/').splice(-1)}>
+							<img src={image} style={{maxWidth: '100%', height: 'auto'}} />
+						</div>
+					</CarouselItem>
 				))}
-				</div>
+				</Carousel>
 			);
 		}
 		else {

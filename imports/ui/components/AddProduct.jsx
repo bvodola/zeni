@@ -2,6 +2,8 @@ import { Random } from 'meteor/random';
 import React, { Component } from 'react';
 import FileUploader from './FileUploader.jsx';
 import ProductVariation from './admin/ProductVariation.jsx';
+import { SizeSelect, DataSelect } from './partials/Partials.jsx';
+import { Helpers } from '../helpers/Helpers.jsx';
 import { Products } from '../../api/products.js';
 
 class AddProduct extends Component {
@@ -9,7 +11,8 @@ class AddProduct extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			variations: 1
+			variations: 1,
+			category_id: ''
 		}
 		this.style = {
 
@@ -60,22 +63,30 @@ class AddProduct extends Component {
 		for(let i=0; i<this.state.variations; i++ ) {
 			query['variations'].push({
 				_id: Random.id(),
-				color: this.refs['variation'+i+'.color'].value, 
-				size: this.refs['variation'+i+'.size'].value, 
+				color: this.refs['variation'+i+'.color'].state._id, 
+				size: this.refs['variation'+i+'.size'].state.size_id, 
 			});
 		}
-		
+
 		// Saving to the database and clearing fields
 		Products.insert(query);
 		clearFields();
+	}
+	
 
+	// This function changes the category_id state
+	// everytime the Category Select changes
+	handleCategoryChange(event) {
+		this.setState({
+			category_id: event.target.value
+		});
 	}
 
 	renderCategories() {
 		
 		if(this.props.categories.length > 0) {
 			return(
-				<select name="category_id" defaultValue="">
+				<select name="category_id" defaultValue="" onChange={this.handleCategoryChange.bind(this)}>
 					<option value="" disabled>Departamento</option>
 					{this.props.categories.map((category) => (
 						<option value={category._id} key={category._id}>
@@ -123,10 +134,10 @@ class AddProduct extends Component {
 							{(i>0)?<ons-icon onClick={this.removeVariation.bind(this)} style={this.style.removeVariationIcon} icon="ion-close-circled"></ons-icon>:''}
 						</ons-list-header>
 						<ons-list-item>
-							<ons-input ref={'variation'+i+'.color'} type='text' placeholder='Cor' />
+							<DataSelect placeholder='Cor' optionVal='name' data={this.props.colors} ref={'variation'+i+'.color'} />
 						</ons-list-item>
 						<ons-list-item>
-							<ons-input ref={'variation'+i+'.size'} type='text' placeholder='Tamanho' />
+							<SizeSelect ref={'variation'+i+'.size'} sizes={this.props.sizes} category_id={this.state.category_id} />
 						</ons-list-item>
 					</ons-list>
 				))}
@@ -147,11 +158,6 @@ class AddProduct extends Component {
 			<form>
 				<ons-list modifier='inset'>
 					<ons-list-header>Dados Principais</ons-list-header>	
-
-					<ons-list-item>
-						<ons-input name='name' type='text' placeholder='Nome do Produto' />
-					</ons-list-item>
-
 					<ons-list-item>
 						{this.renderCategories()}
 					</ons-list-item>
@@ -161,27 +167,29 @@ class AddProduct extends Component {
 					</ons-list-item>
 
 					<ons-list-item>
+						<ons-input name='name' type='text' placeholder='Nome/Modelo' />
+					</ons-list-item>
+
+					<ons-list-item>
 						<input ref='price' name='price' type='text' placeholder='Preço (R$)' className='text-input' />
 					</ons-list-item>
 
 				</ons-list>
+
+				{this.renderVariations()}
+				<ons-button style={this.style.addVariationButton} class="button button--outline" onClick={this.addVariation.bind(this)}>
+					<ons-icon icon="ion-plus-circled" style={this.style.addVariationButtonIcon} fixed-width="true"></ons-icon>
+					Adicionar Variação
+				</ons-button>
 				
 				<ons-list modifier='inset'>
 					<ons-list-header>
 						Imagens
 					</ons-list-header>	
-						<ons-list-item>
-							<FileUploader />
-						</ons-list-item>
-					</ons-list>
-				
-				
-				{this.renderVariations()}
-
-				<ons-button style={this.style.addVariationButton} class="button button--outline" onClick={this.addVariation.bind(this)}>
-					<ons-icon icon="ion-plus-circled" style={this.style.addVariationButtonIcon} fixed-width="true"></ons-icon>
-					Adicionar Variação
-				</ons-button>
+					<ons-list-item>
+						<FileUploader />
+					</ons-list-item>
+				</ons-list>
 
 				<ons-button style={this.style.submitButton} onClick={this.handleSubmit.bind(this)}>Cadastrar</ons-button>
 			</form>

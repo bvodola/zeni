@@ -76,7 +76,14 @@ class Repeatable extends Component {
 
 class Helpers {
 
-	// Sets all the ref values to a handy { refName:refValue } object
+	// Sets all the ref values of INPUT, SELECT and TEXTAREAS to a handy { refName:refValue } object
+	// Also, if any ReactElement with a ref defined has a dataState prop defined, this function will
+	// check that Element for the value of the state named on the dataState prop and assign it to
+	// the refName:refValue pair.
+	//
+	// Example:
+	// TO-DO
+
 	static getRefValues(refs) {
 		let refValues = new Object();
 
@@ -84,8 +91,11 @@ class Helpers {
 			if (refs.hasOwnProperty(key)) {
 				if(typeof refs[key].nodeName !== 'undefined' && (refs[key].nodeName == 'INPUT' || refs[key].nodeName == 'SELECT' || refs[key].nodeName == 'TEXTAREA')) {
 					refValues[key] = refs[key].value;
-				} else if(typeof refs[key].props !== 'undefined' && typeof refs[key].props.elementDataState !== 'undefined') {
-					refValues[key] = refs[key].state[refs[key].props.elementDataState];
+				} else if(typeof refs[key].props !== 'undefined' && typeof refs[key].props.dataState !== 'undefined') {
+					if(refs[key].props.dataState === true)
+						refValues[key] = refs[key].state['data'];
+					else	
+						refValues[key] = refs[key].state[refs[key].props.dataState];
 				}
 			}
 		}

@@ -44,7 +44,7 @@ Meteor.methods({
 
 			// If the user doesn't have a cart defined on the database, let's define it
 			if(typeof(cart) == 'undefined') {
-				Carts.insert({user_id: Meteor.userId(), products: new Array()});
+				Carts.insert({user_id: Meteor.userId(), products: new Array(), total: 0});
 				cart = Carts.findOne({user_id: Meteor.userId()});
 			}
 
@@ -107,11 +107,8 @@ Meteor.methods({
 					cart.products.push(product);
 
 				// Finally, update the cart in the database
-				Carts.update(cart._id, {
-					$set: {
-						products: cart.products
-					}
-				});
+				Carts.update(cart._id,{$set: {products: cart.products}});
+				Carts.update(cart._id,{$set: {total: getCartTotal()}});
 			}
 		});
 	},
@@ -125,11 +122,8 @@ Meteor.methods({
 					cart.products.splice(i,1);
 
 					// Update the cart in the database
-					Carts.update(cart._id, {
-						$set: {
-							products: cart.products
-						}
-					});
+					Carts.update(cart._id,{$set: {products: cart.products}});
+					Carts.update(cart._id,{$set: {total: getCartTotal()}});
 				}
 			}
 		}
@@ -150,11 +144,8 @@ Meteor.methods({
 								Meteor.call('removeProductFromCart', productId);
 							} else {
 								// Update the cart in the database
-								Carts.update(cart._id, {
-									$set: {
-										products: cart.products
-									}
-								});
+								Carts.update(cart._id,{$set: {products: cart.products}});
+								Carts.update(cart._id,{$set: {total: getCartTotal()}});
 							}
 						}
 					}
@@ -178,11 +169,8 @@ Meteor.methods({
 							if(cart.products[i].variations[j]._id == variationId) {
 								cart.products[i].variations[j].quantity = newQuantity;
 								// Update the cart in the database
-								Carts.update(cart._id, {
-									$set: {
-										products: cart.products
-									}
-								});
+								Carts.update(cart._id,{$set: {products: cart.products}});
+								Carts.update(cart._id,{$set: {total: getCartTotal()}});
 							}
 						}
 					}
@@ -224,3 +212,33 @@ Meteor.methods({
 	}
 
 });
+
+
+function getCartTotal() {
+	// Checks if the user is defined
+	if(typeof(Meteor.user()) != 'undefined') {
+		let cart = Carts.findOne({user_id: Meteor.userId()});
+		console.log(cart);
+
+		// If the user doesn't have a cart defined on the database, returns 0
+		if(typeof(cart) == 'undefined') {
+			return 0;
+		}
+		
+		// If the user has a cart defined, let's calculate it's total
+		else {
+			let total = 0;
+			cart.products.forEach(function(product,i,products) {
+				product.variations.forEach(function(variation,j,variations) {
+					total += product.price*variation.quantity
+				});
+			});
+
+			return total;
+		}
+	}
+
+	// If no user is logged, returns undefined
+	else
+		return 'User not logged';
+}

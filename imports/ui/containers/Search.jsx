@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { composeWithTracker } from 'react-komposer';
-import AddProduct  from '../components/AddProduct.jsx';
+import Search from '../components/Search.jsx';
 
 import { Categories } from '../../api/categories.js';
 import { Brands } from '../../api/brands.js';
@@ -23,4 +23,4 @@ function composer(props, onData) {
 	}
 }
 
-export default composeWithTracker(composer)(AddProduct);
+export default composeWithTracker(composer)(Search);

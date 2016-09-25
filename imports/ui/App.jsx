@@ -53,6 +53,7 @@ class App extends Component {
 				<ons-list>
 					<a href='/new'><ons-list-item onClick={this.hide} tappable>Lançamentos</ons-list-item></a>
 					<a href='/categories'><ons-list-item onClick={this.hide} tappable>Departamentos</ons-list-item></a>
+					<a href='/search'><ons-list-item onClick={this.hide} tappable>Buscar</ons-list-item></a>
 
 					{Meteor.user().verified?(
 						<a href='/cart'><ons-list-item onClick={this.hide} tappable>Meu Carrinho</ons-list-item></a>
